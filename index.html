@@ -1155,5 +1155,15 @@ function escapeHTML(value) {
 }
 
 </script>
+  
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js')
+      .catch(error => console.error('Vocaboo offline error:', error));
+  });
+}
+</script>
+
 </body>
 </html>
