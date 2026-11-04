@@ -1,0 +1,1159 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#f5f8f5">
+<title>Vocaboo</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #f5f8f5;
+  --green: #287a52;
+  --green-dark: #205e40;
+  --light: #e3f1e7;
+  --text: #23372b;
+  --muted: #8b9a90;
+  --white: #ffffff;
+  --border: #e8eee9;
+  --red: #d96b63;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  min-height: 100vh;
+}
+
+button, textarea, input {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 20px 18px 35px;
+  min-height: 100vh;
+}
+
+/* HEADER */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 27px;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--green);
+}
+
+.logo span {
+  color: #9bc8a8;
+}
+
+.word-count {
+  background: var(--light);
+  color: var(--green);
+  border-radius: 30px;
+  padding: 7px 13px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+/* WORD LIST */
+
+.list-box {
+  background: white;
+  border-radius: 19px;
+  padding: 15px;
+  margin-bottom: 25px;
+  border: 1px solid var(--border);
+}
+
+.list-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.icon-btn {
+  background: var(--bg);
+  border: none;
+  border-radius: 10px;
+  width: 34px;
+  height: 34px;
+  color: var(--green);
+  font-size: 19px;
+}
+
+.list-content {
+  margin-top: 12px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 125px;
+  resize: vertical;
+  padding: 13px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  outline: none;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text);
+  background: #fbfdfb;
+}
+
+textarea:focus, input:focus {
+  border-color: #8cbea0;
+}
+
+textarea::placeholder {
+  color: #a8b5ac;
+}
+
+.load-btn, .primary-btn {
+  background: var(--green);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 13px 18px;
+  font-size: 14px;
+  font-weight: 800;
+  width: 100%;
+  margin-top: 10px;
+  transition: .2s;
+}
+
+.load-btn:active, .primary-btn:active {
+  transform: scale(.98);
+  background: var(--green-dark);
+}
+
+.list-hidden {
+  display: none;
+}
+
+.list-status {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+/* MODES */
+
+.section-title {
+  font-size: 17px;
+  font-weight: 800;
+  margin-bottom: 13px;
+}
+
+.modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px;
+}
+
+.mode {
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 17px;
+  padding: 16px 13px;
+  min-height: 105px;
+  text-align: left;
+  color: var(--text);
+  transition: .2s;
+}
+
+.mode:active {
+  transform: scale(.97);
+  background: var(--light);
+}
+
+.mode-icon {
+  font-size: 23px;
+  margin-bottom: 9px;
+}
+
+.mode-name {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.mode-desc {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+.mode:last-child {
+  grid-column: span 2;
+  min-height: 85px;
+}
+
+/* TRAINING */
+
+#training {
+  display: none;
+}
+
+.training-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.back-btn {
+  background: white;
+  border: 1px solid var(--border);
+  color: var(--green);
+  border-radius: 11px;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+}
+
+.progress-text {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.progress-line {
+  width: 100%;
+  height: 5px;
+  background: #e4ebe5;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 27px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--green);
+  transition: width .3s;
+  border-radius: 10px;
+}
+
+.question-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 23px;
+  min-height: 215px;
+  padding: 25px 17px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.question-small {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.question-word {
+  font-size: clamp(27px, 8vw, 38px);
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.answer-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.answer-btn {
+  width: 100%;
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 15px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  transition: .2s;
+}
+
+.answer-btn.correct {
+  background: #e0f3e5;
+  border-color: #72b78a;
+  color: var(--green-dark);
+}
+
+.answer-btn.wrong {
+  background: #fff0ed;
+  border-color: #e4a19b;
+  color: #b34e46;
+}
+
+.answer-btn:disabled {
+  cursor: default;
+}
+
+.feedback {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 800;
+  margin: 14px 0 4px;
+  min-height: 20px;
+}
+
+.feedback.good {
+  color: var(--green);
+}
+
+.feedback.bad {
+  color: var(--red);
+}
+
+/* INPUT */
+
+.word-input {
+  width: 100%;
+  padding: 17px;
+  border-radius: 14px;
+  background: white;
+  border: 1.5px solid var(--border);
+  outline: none;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+/* LETTERS */
+
+.letters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.letter {
+  width: 43px;
+  height: 46px;
+  border-radius: 10px;
+  background: white;
+  border: 1px solid var(--border);
+  color: var(--green);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.letter.used {
+  opacity: .25;
+}
+
+.slots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: 15px 0;
+}
+
+.slot {
+  width: 30px;
+  height: 39px;
+  border-bottom: 2px solid #a8c5ae;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  font-size: 19px;
+  cursor: pointer;
+}
+
+.slot.given {
+  border: none;
+  color: var(--green);
+}
+
+.slot.filled {
+  color: var(--text);
+}
+
+/* FLASHCARD */
+
+.flashcard {
+  min-height: 270px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 25px;
+  font-size: 33px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.flash-hint {
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+  margin: 12px 0 22px;
+}
+
+.flash-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.know-btn, .repeat-btn {
+  padding: 15px 8px;
+  border-radius: 13px;
+  border: none;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.know-btn {
+  background: var(--light);
+  color: var(--green);
+}
+
+.repeat-btn {
+  background: #fff0ed;
+  color: #bb625b;
+}
+
+/* RESULT */
+
+.result {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 30px 20px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.result-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.result-score {
+  font-size: 35px;
+  font-weight: 800;
+  color: var(--green);
+}
+
+.result-detail {
+  color: var(--muted);
+  margin-top: 7px;
+  font-size: 14px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* FOOTER */
+
+.footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 30px;
+  letter-spacing: .3px;
+}
+
+@media (min-width: 600px) {
+  .app {
+    padding-top: 35px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header class="header">
+    <div class="logo">voca<span>boo</span></div>
+    <div class="word-count" id="wordCount">0 слов</div>
+  </header>
+
+  <section id="home">
+
+    <div class="list-box">
+      <div class="list-top">
+        <span id="listTitle">Мой список</span>
+        <button class="icon-btn" id="toggleList">⌃</button>
+      </div>
+
+      <div class="list-content" id="listContent">
+        <textarea id="wordList"
+          placeholder="apple — яблоко&#10;beautiful — красивый&#10;journey — путешествие"></textarea>
+
+        <button class="load-btn" id="loadWords">Загрузить список</button>
+        <div class="list-status" id="listStatus"></div>
+      </div>
+    </div>
+
+    <div class="section-title">Тренировка</div>
+
+    <div class="modes">
+
+      <button class="mode" data-mode="flash">
+        <div class="mode-icon">▣</div>
+        <div class="mode-name">Флешкарточки</div>
+        <div class="mode-desc">Слово и перевод</div>
+      </button>
+
+      <button class="mode" data-mode="scramble">
+        <div class="mode-icon">⌘</div>
+        <div class="mode-name">Скрэмбл</div>
+        <div class="mode-desc">Собери слово</div>
+      </button>
+
+      <button class="mode" data-mode="quizRu">
+        <div class="mode-icon">◉</div>
+        <div class="mode-name">Выбери перевод</div>
+        <div class="mode-desc">English → Русский</div>
+      </button>
+
+      <button class="mode" data-mode="quizEn">
+        <div class="mode-icon">◎</div>
+        <div class="mode-name">Выбери слово</div>
+        <div class="mode-desc">Русский → English</div>
+      </button>
+
+      <button class="mode" data-mode="missing">
+        <div class="mode-icon">✳</div>
+        <div class="mode-name">Вставь буквы</div>
+        <div class="mode-desc">Восстанови слово</div>
+      </button>
+
+      <button class="mode" data-mode="writeEn">
+        <div class="mode-icon">✎</div>
+        <div class="mode-name">Напиши слово</div>
+        <div class="mode-desc">Русский → English</div>
+      </button>
+
+      <button class="mode" data-mode="writeRu">
+        <div class="mode-icon">Aa</div>
+        <div class="mode-name">Напиши перевод</div>
+        <div class="mode-desc">English → Русский</div>
+      </button>
+
+    </div>
+
+    <div class="footer">Created by Anastasiya Dvoeglazova</div>
+
+  </section>
+
+  <section id="training">
+
+    <div class="training-top">
+      <button class="back-btn" id="backBtn">←</button>
+      <div class="progress-text" id="progressText">1 / 10</div>
+    </div>
+
+    <div class="progress-line">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div id="gameArea"></div>
+
+  </section>
+
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+let words = [];
+let queue = [];
+let mode = '';
+let index = 0;
+let correct = 0;
+let wrong = 0;
+let locked = false;
+let revealed = false;
+let selected = [];
+let letterBank = [];
+let missingPositions = [];
+let hiddenLetters = [];
+
+const modeNames = {
+  flash: 'Флешкарточки',
+  scramble: 'Скрэмбл',
+  quizRu: 'Выбери перевод',
+  quizEn: 'Выбери слово',
+  missing: 'Вставь буквы',
+  writeEn: 'Напиши слово',
+  writeRu: 'Напиши перевод'
+};
+
+function shuffle(arr) {
+  return [...arr].sort(() => Math.random() - 0.5);
+}
+
+function parseWords(text) {
+  return text.split(/\r?\n/)
+    .map(line => {
+      const parts = line.split(/\s*(?:—|–|-|\t|;)\s*/);
+      if (parts.length < 2) return null;
+
+      const en = parts[0].trim();
+      const ru = parts.slice(1).join(' ').trim();
+
+      if (!en || !ru) return null;
+
+      return { en, ru };
+    })
+    .filter(Boolean);
+}
+
+function updateCount() {
+  $('wordCount').textContent = words.length + ' слов';
+  $('listTitle').textContent = words.length
+    ? 'Мой список · ' + words.length
+    : 'Мой список';
+}
+
+$('loadWords').onclick = () => {
+  const parsed = parseWords($('wordList').value);
+
+  if (parsed.length < 2) {
+    $('listStatus').textContent = 'Добавьте минимум 2 пары слов';
+    return;
+  }
+
+  words = parsed;
+  updateCount();
+  $('listStatus').textContent = '✓ Загружено ' + words.length;
+};
+
+$('toggleList').onclick = () => {
+  const content = $('listContent');
+  content.classList.toggle('list-hidden');
+  $('toggleList').textContent =
+    content.classList.contains('list-hidden') ? '⌄' : '⌃';
+};
+
+function startGame(selectedMode) {
+  if (words.length < 2) {
+    $('listStatus').textContent = 'Сначала загрузите список слов';
+    return;
+  }
+
+  mode = selectedMode;
+  queue = shuffle(words);
+  index = 0;
+  correct = 0;
+  wrong = 0;
+  locked = false;
+  revealed = false;
+
+  $('home').style.display = 'none';
+  $('training').style.display = 'block';
+
+  renderQuestion();
+}
+
+document.querySelectorAll('.mode').forEach(btn => {
+  btn.onclick = () => startGame(btn.dataset.mode);
+});
+
+$('backBtn').onclick = () => {
+  $('training').style.display = 'none';
+  $('home').style.display = 'block';
+};
+
+function updateProgress() {
+  $('progressText').textContent =
+    Math.min(index + 1, queue.length) + ' / ' + queue.length;
+
+  $('progressFill').style.width =
+    (index / queue.length * 100) + '%';
+}
+
+function renderQuestion() {
+  if (index >= queue.length) {
+    showResult();
+    return;
+  }
+
+  locked = false;
+  revealed = false;
+  selected = [];
+
+  updateProgress();
+
+  const word = queue[index];
+  const area = $('gameArea');
+
+  if (mode === 'flash') renderFlash(word, area);
+  if (mode === 'quizRu') renderQuiz(word, area, false);
+  if (mode === 'quizEn') renderQuiz(word, area, true);
+  if (mode === 'writeEn') renderWrite(word, area, false);
+  if (mode === 'writeRu') renderWrite(word, area, true);
+  if (mode === 'scramble') renderScramble(word, area);
+  if (mode === 'missing') renderMissing(word, area);
+}
+
+/* FLASHCARDS */
+
+function renderFlash(word, area) {
+  area.innerHTML = `
+    <div class="flashcard" id="flashCard">
+      <span>${escapeHTML(word.en)}</span>
+    </div>
+    <div class="flash-hint" id="flashHint">Нажмите на карточку</div>
+    <div class="flash-actions hidden" id="flashActions">
+      <button class="repeat-btn" id="repeat">Повторить</button>
+      <button class="know-btn" id="know">Знаю</button>
+    </div>
+  `;
+
+  $('flashCard').onclick = () => {
+    if (revealed) return;
+    revealed = true;
+    $('flashCard').innerHTML = escapeHTML(word.ru);
+    $('flashHint').textContent = 'Перевод';
+    $('flashActions').classList.remove('hidden');
+  };
+
+  $('repeat').onclick = () => {
+    wrong++;
+    nextQuestion();
+  };
+
+  $('know').onclick = () => {
+    correct++;
+    nextQuestion();
+  };
+}
+
+/* MULTIPLE CHOICE */
+
+function renderQuiz(word, area, reverse) {
+  const question = reverse ? word.ru : word.en;
+  const answer = reverse ? word.en : word.ru;
+
+  const others = shuffle(
+    words.filter(w => w !== word)
+  ).slice(0, 3);
+
+  const options = shuffle([
+    answer,
+    ...others.map(w => reverse ? w.en : w.ru)
+  ]);
+
+  area.innerHTML = `
+    <div class="question-card">
+      <div class="question-small">
+        ${reverse ? 'РУССКИЙ ПЕРЕВОД' : 'ENGLISH WORD'}
+      </div>
+      <div class="question-word">${escapeHTML(question)}</div>
+    </div>
+
+    <div class="answer-grid">
+      ${options.map((option, i) => `
+        <button class="answer-btn" data-index="${i}">
+          ${escapeHTML(option)}
+        </button>
+      `).join('')}
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+  `;
+
+  document.querySelectorAll('.answer-btn').forEach(btn => {
+    btn.onclick = () => {
+      if (locked) return;
+      locked = true;
+
+      const value = options[Number(btn.dataset.index)];
+      const isCorrect = value.toLowerCase() === answer.toLowerCase();
+
+      if (isCorrect) correct++;
+      else wrong++;
+
+      document.querySelectorAll('.answer-btn').forEach(b => {
+        b.disabled = true;
+        const val = options[Number(b.dataset.index)];
+
+        if (val.toLowerCase() === answer.toLowerCase()) {
+          b.classList.add('correct');
+        } else if (b === btn) {
+          b.classList.add('wrong');
+        }
+      });
+
+      showFeedback(isCorrect, answer);
+    };
+  });
+}
+
+/* WRITE WORD */
+
+function renderWrite(word, area, reverse) {
+  const question = reverse ? word.en : word.ru;
+  const answer = reverse ? word.ru : word.en;
+
+  area.innerHTML = `
+    <div class="question-card">
+      <div class="question-small">
+        ${reverse ? 'ENGLISH WORD' : 'ПЕРЕВОД'}
+      </div>
+      <div class="question-word">${escapeHTML(question)}</div>
+    </div>
+
+    <input class="word-input" id="wordInput"
+      autocomplete="off" autocapitalize="off"
+      placeholder="..." />
+
+    <button class="primary-btn" id="checkBtn">Проверить</button>
+    <div class="feedback" id="feedback"></div>
+  `;
+
+  const input = $('wordInput');
+  input.focus();
+
+  const check = () => {
+    if (locked) return;
+
+    const value = input.value.trim();
+    if (!value) return;
+
+    locked = true;
+    const isCorrect = normalize(value) === normalize(answer);
+
+    if (isCorrect) correct++;
+    else wrong++;
+
+    input.disabled = true;
+    $('checkBtn').disabled = true;
+
+    showFeedback(isCorrect, answer);
+  };
+
+  $('checkBtn').onclick = check;
+  input.onkeydown = e => {
+    if (e.key === 'Enter') check();
+  };
+}
+
+/* SCRAMBLE */
+
+function renderScramble(word, area) {
+  const letters = shuffle(word.en.toUpperCase().split(''));
+  letterBank = letters.map((letter, i) => ({
+    letter,
+    id: i
+  }));
+
+  selected = [];
+
+  area.innerHTML = `
+    <div class="question-card">
+      <div class="question-small">ПЕРЕВОД</div>
+      <div class="question-word">${escapeHTML(word.ru)}</div>
+    </div>
+
+    <div class="slots" id="scrambleSlots"></div>
+    <div class="letters" id="letterBank"></div>
+
+    <button class="primary-btn" id="checkBtn">Проверить</button>
+    <div class="feedback" id="feedback"></div>
+  `;
+
+  drawScramble();
+
+  $('checkBtn').onclick = () => {
+    if (locked) return;
+
+    const value = selected.map(x => x.letter).join('');
+    if (selected.length !== word.en.length) return;
+
+    locked = true;
+    const isCorrect = normalize(value) === normalize(word.en);
+
+    if (isCorrect) correct++;
+    else wrong++;
+
+    $('checkBtn').disabled = true;
+    showFeedback(isCorrect, word.en);
+  };
+}
+
+function drawScramble() {
+  $('scrambleSlots').innerHTML = Array.from(
+    { length: letterBank.length }, (_, i) => {
+      const item = selected[i];
+      return `
+        <div class="slot ${item ? 'filled' : ''}"
+          data-remove="${i}">
+          ${item ? escapeHTML(item.letter) : ''}
+        </div>
+      `;
+    }
+  ).join('');
+
+  $('letterBank').innerHTML = letterBank.map(item => `
+    <button class="letter ${selected.some(x => x.id === item.id) ? 'used' : ''}"
+      data-letter="${item.id}">
+      ${escapeHTML(item.letter)}
+    </button>
+  `).join('');
+
+  document.querySelectorAll('[data-letter]').forEach(btn => {
+    btn.onclick = () => {
+      if (locked) return;
+
+      const id = Number(btn.dataset.letter);
+      if (selected.some(x => x.id === id)) return;
+
+      selected.push(letterBank.find(x => x.id === id));
+      drawScramble();
+    };
+  });
+
+  document.querySelectorAll('[data-remove]').forEach(btn => {
+    btn.onclick = () => {
+      if (locked) return;
+      selected.splice(Number(btn.dataset.remove), 1);
+      drawScramble();
+    };
+  });
+}
+
+/* MISSING LETTERS */
+
+function renderMissing(word, area) {
+  const letters = word.en.toUpperCase().split('');
+  const unique = [...new Set(letters)];
+
+  const hideCount = Math.min(
+    letters.length,
+    Math.max(1, Math.ceil(letters.length * .4))
+  );
+
+  hiddenLetters = shuffle(
+    letters.map((letter, i) => i)
+  ).slice(0, hideCount).sort((a, b) => a - b);
+
+  selected = [];
+  letterBank = shuffle(
+    hiddenLetters.map(i => ({
+      letter: letters[i],
+      id: i
+    }))
+  );
+
+  area.innerHTML = `
+    <div class="question-card">
+      <div class="question-small">ПЕРЕВОД</div>
+      <div class="question-word">${escapeHTML(word.ru)}</div>
+    </div>
+
+    <div class="slots" id="missingSlots"></div>
+    <div class="letters" id="missingBank"></div>
+
+    <button class="primary-btn" id="checkBtn">Проверить</button>
+    <div class="feedback" id="feedback"></div>
+  `;
+
+  drawMissing(letters);
+
+  $('checkBtn').onclick = () => {
+    if (locked || selected.length !== hiddenLetters.length) return;
+
+    locked = true;
+
+    const isCorrect = hiddenLetters.every((position, i) =>
+      selected[i] === letters[position]
+    );
+
+    if (isCorrect) correct++;
+    else wrong++;
+
+    $('checkBtn').disabled = true;
+    showFeedback(isCorrect, word.en);
+  };
+}
+
+function drawMissing(letters) {
+  $('missingSlots').innerHTML = letters.map((letter, i) => {
+    const hiddenIndex = hiddenLetters.indexOf(i);
+    const isHidden = hiddenIndex !== -1;
+    const value = isHidden ? selected[hiddenIndex] : letter;
+
+    return `
+      <div class="slot ${isHidden ? 'filled' : 'given'}"
+        data-missing="${hiddenIndex}">
+        ${value ? escapeHTML(value) : ''}
+      </div>
+    `;
+  }).join('');
+
+  $('missingBank').innerHTML = letterBank.map(item => `
+    <button class="letter ${selected[item.id] ? 'used' : ''}"
+      data-missing-letter="${item.id}">
+      ${escapeHTML(item.letter)}
+    </button>
+  `).join('');
+
+  document.querySelectorAll('[data-missing-letter]').forEach(btn => {
+    btn.onclick = () => {
+      if (locked) return;
+
+      const position = Number(btn.dataset.missingLetter);
+
+      if (selected[position]) {
+        selected[position] = null;
+      } else {
+        const empty = selected.findIndex(x => !x);
+        if (empty === -1) {
+          selected.push(null);
+          selected.pop();
+          const firstEmpty = selected.length;
+          if (firstEmpty >= hiddenLetters.length) return;
+          selected[firstEmpty] = letterBank.find(x => x.id === position).letter;
+        } else {
+          selected[position] = letterBank.find(x => x.id === position).letter;
+        }
+      }
+
+      drawMissing(letters);
+    };
+  });
+
+  document.querySelectorAll('[data-missing]').forEach(btn => {
+    btn.onclick = () => {
+      if (locked) return;
+      const position = Number(btn.dataset.missing);
+      if (position >= 0) {
+        selected[position] = null;
+        drawMissing(letters);
+      }
+    };
+  });
+}
+
+/* FEEDBACK */
+
+function showFeedback(isCorrect, answer) {
+  const feedback = $('feedback');
+
+  feedback.className = 'feedback ' +
+    (isCorrect ? 'good' : 'bad');
+
+  feedback.innerHTML = isCorrect
+    ? '✓ Правильно!'
+    : '✕ ' + escapeHTML(answer);
+
+  const button = document.createElement('button');
+  button.className = 'primary-btn';
+  button.textContent = index + 1 === queue.length
+    ? 'Завершить'
+    : 'Далее';
+
+  button.onclick = nextQuestion;
+
+  feedback.after(button);
+}
+
+function nextQuestion() {
+  index++;
+  renderQuestion();
+}
+
+/* RESULTS */
+
+function showResult() {
+  $('progressFill').style.width = '100%';
+
+  const total = correct + wrong;
+  const percent = Math.round(correct / total * 100);
+
+  $('gameArea').innerHTML = `
+    <div class="result">
+      <div class="result-icon">${percent >= 80 ? '★' : '✓'}</div>
+      <div class="result-score">${percent}%</div>
+      <div class="result-detail">
+        Правильно: ${correct} из ${total}
+      </div>
+      <div class="result-detail">
+        Ошибки: ${wrong}
+      </div>
+      <button class="primary-btn" id="againBtn">
+        Ещё раз
+      </button>
+      <button class="primary-btn" id="homeBtn"
+        style="background:#e3f1e7;color:#287a52">
+        На главную
+      </button>
+    </div>
+  `;
+
+  $('againBtn').onclick = () => startGame(mode);
+
+  $('homeBtn').onclick = () => {
+    $('training').style.display = 'none';
+    $('home').style.display = 'block';
+  };
+}
+
+/* UTILS */
+
+function normalize(value) {
+  return value.trim().toLowerCase().replace(/\s+/g, ' ');
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[char]);
+}
+
+</script>
+</body>
+</html>
